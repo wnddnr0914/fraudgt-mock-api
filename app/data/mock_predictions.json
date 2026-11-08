@@ -1,0 +1,157 @@
+[
+  {
+    "transaction_id": "TX000001",
+    "fraud_score": 0.35,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000002",
+    "fraud_score": 0.92,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000003",
+    "fraud_score": 0.81,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000004",
+    "fraud_score": 0.9,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000005",
+    "fraud_score": 0.93,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000006",
+    "fraud_score": 0.95,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000007",
+    "fraud_score": 0.3,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000008",
+    "fraud_score": 0.25,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000009",
+    "fraud_score": 0.1,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000010",
+    "fraud_score": 0.88,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000011",
+    "fraud_score": 0.12,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000012",
+    "fraud_score": 0.86,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000013",
+    "fraud_score": 0.87,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000014",
+    "fraud_score": 0.22,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000015",
+    "fraud_score": 0.15,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000016",
+    "fraud_score": 0.09,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000017",
+    "fraud_score": 0.91,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000018",
+    "fraud_score": 0.89,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000019",
+    "fraud_score": 0.32,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000020",
+    "fraud_score": 0.2,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000021",
+    "fraud_score": 0.1,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000022",
+    "fraud_score": 0.82,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000023",
+    "fraud_score": 0.94,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000024",
+    "fraud_score": 0.88,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000025",
+    "fraud_score": 0.89,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000026",
+    "fraud_score": 0.97,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000027",
+    "fraud_score": 0.33,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000028",
+    "fraud_score": 0.25,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000029",
+    "fraud_score": 0.35,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000030",
+    "fraud_score": 0.44,
+    "model_version": "fraudgt-mock-v1"
+  },
+  {
+    "transaction_id": "TX000031",
+    "fraud_score": 0.6,
+    "model_version": "fraudgt-mock-v1"
+  }
+]

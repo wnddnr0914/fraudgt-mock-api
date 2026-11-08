@@ -1,0 +1,650 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FraudGT AML — Explanation API",
+    "description": "프론트엔드·그래프·Agent 연동을 위한 합성 거래 기반 API. 거래 조회·그래프·설명·유형 분석은 서비스별 Base URL로 독립 실행합니다. 실제 SAML-D 행이나 ML 추론 결과가 아닙니다. fraud_score, edge importance, typology confidence는 서로 다른 Mock 출력입니다. 모든 시간 응답은 UTC로 정규화합니다.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/alerts/{transaction_id}/explanation": {
+      "post": {
+        "tags": [
+          "Explanation"
+        ],
+        "summary": "설명 Mock 작업 생성",
+        "description": "GNNExplainer Worker의 향후 실행 인터페이스입니다. 실제 연산 없이 pending을 반환합니다. 동일 거래·모델 버전은 같은 작업을 재사용합니다. body 생략 시 현재 FraudGT 버전입니다. 이후 GET에서 준비된 completed 또는 failed 결과를 확인합니다.",
+        "operationId": "request_explanation_api_alerts__transaction_id__explanation_post",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160,
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "description": "조회할 개별 거래 ID. 계좌 ID와 구분합니다.",
+              "examples": [
+                "TX000003"
+              ],
+              "title": "Transaction Id"
+            },
+            "description": "조회할 개별 거래 ID. 계좌 ID와 구분합니다."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ExplanationRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              },
+              "examples": {
+                "current": {
+                  "summary": "현재 Mock 모델",
+                  "value": {
+                    "model_version": "fraudgt-mock-v1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExplanationAccepted"
+                },
+                "examples": {
+                  "fixture": {
+                    "summary": "합성 Fixture 응답",
+                    "value": {
+                      "transaction_id": "TX000003",
+                      "explanation_id": "EXP-94270638dcd55fec44542f7b72cdacd7e6e55ebf3aaf70ef1418d3cfe1503e78",
+                      "status": "pending",
+                      "model_version": "fraudgt-mock-v1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction is absent or below the configured alert threshold",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "ALERT_NOT_FOUND",
+                    "message": "Transaction is absent or below the configured alert threshold",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The requested version does not match this prediction",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "MODEL_VERSION_MISMATCH",
+                    "message": "The requested version does not match this prediction",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request parameters are invalid",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "Request parameters are invalid",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An internal error occurred",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INTERNAL_ERROR",
+                    "message": "An internal error occurred",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Explanation"
+        ],
+        "summary": "설명 상태와 Edge 중요도",
+        "description": "요청 전 not_requested, 요청 후 completed 또는 Fixture 실패 시 failed를 반환합니다. importance는 FraudGT 점수가 아니라 주변 Edge의 설명 기여도 Mock 값입니다. graph_snapshot 메타데이터로 추론 시점의 그래프·전처리·샘플링 버전을 구별합니다. 화면 그래프를 좁혔다면 일부 설명 Edge가 화면에 없을 수 있습니다.",
+        "operationId": "get_explanation_api_alerts__transaction_id__explanation_get",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160,
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "description": "조회할 개별 거래 ID. 계좌 ID와 구분합니다.",
+              "examples": [
+                "TX000003"
+              ],
+              "title": "Transaction Id"
+            },
+            "description": "조회할 개별 거래 ID. 계좌 ID와 구분합니다."
+          },
+          {
+            "name": "model_version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "생략 시 현재 FraudGT 버전",
+              "title": "Model Version"
+            },
+            "description": "생략 시 현재 FraudGT 버전"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExplanationResponse"
+                },
+                "examples": {
+                  "fixture": {
+                    "summary": "합성 Fixture 응답",
+                    "value": {
+                      "transaction_id": "TX000003",
+                      "explanation_id": "EXP-94270638dcd55fec44542f7b72cdacd7e6e55ebf3aaf70ef1418d3cfe1503e78",
+                      "status": "completed",
+                      "method": "GNNExplainer",
+                      "model_version": "fraudgt-mock-v1",
+                      "graph_snapshot": {
+                        "graph_id": "SNAPSHOT-TX000003-v1",
+                        "transaction_id": "TX000003",
+                        "model_version": "fraudgt-mock-v1",
+                        "preprocessing_version": "samld-mock-preprocessing-v1",
+                        "sampler": "fixed-fixture-undirected-neighborhood",
+                        "seed": 42,
+                        "hops": 2,
+                        "lookback_days": 7,
+                        "edge_transaction_ids": [
+                          "TX000001",
+                          "TX000002",
+                          "TX000003",
+                          "TX000007",
+                          "TX000008",
+                          "TX000012",
+                          "TX000013",
+                          "TX000014",
+                          "TX000015",
+                          "TX000029",
+                          "TX000030"
+                        ],
+                        "node_account_ids": [
+                          "A",
+                          "B",
+                          "BORDER",
+                          "C",
+                          "D",
+                          "G",
+                          "I",
+                          "J",
+                          "N",
+                          "R"
+                        ]
+                      },
+                      "edge_importance": [
+                        {
+                          "transaction_id": "TX000001",
+                          "importance": 0.75
+                        },
+                        {
+                          "transaction_id": "TX000002",
+                          "importance": 0.86
+                        },
+                        {
+                          "transaction_id": "TX000007",
+                          "importance": 0.2
+                        },
+                        {
+                          "transaction_id": "TX000008",
+                          "importance": 0.3
+                        },
+                        {
+                          "transaction_id": "TX000012",
+                          "importance": 0.7
+                        },
+                        {
+                          "transaction_id": "TX000013",
+                          "importance": 0.8
+                        },
+                        {
+                          "transaction_id": "TX000014",
+                          "importance": 0.2
+                        },
+                        {
+                          "transaction_id": "TX000015",
+                          "importance": 0.3
+                        },
+                        {
+                          "transaction_id": "TX000029",
+                          "importance": 0.3
+                        },
+                        {
+                          "transaction_id": "TX000030",
+                          "importance": 0.4
+                        }
+                      ],
+                      "error": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction is absent or below the configured alert threshold",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "ALERT_NOT_FOUND",
+                    "message": "Transaction is absent or below the configured alert threshold",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The requested version does not match this prediction",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "MODEL_VERSION_MISMATCH",
+                    "message": "The requested version does not match this prediction",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request parameters are invalid",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "Request parameters are invalid",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An internal error occurred",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INTERNAL_ERROR",
+                    "message": "An internal error occurred",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EdgeImportance": {
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id"
+          },
+          "importance": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Importance"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "importance"
+        ],
+        "title": "EdgeImportance"
+      },
+      "ErrorInfo": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code",
+            "description": "Stable machine-readable error code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable reason"
+          },
+          "details": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Details",
+            "description": "Parameter validation details"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorInfo"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse"
+      },
+      "ExplanationAccepted": {
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id"
+          },
+          "explanation_id": {
+            "type": "string",
+            "title": "Explanation Id",
+            "description": "거래와 모델 버전 쌍의 안정적인 작업 ID."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "completed",
+              "failed"
+            ],
+            "title": "Status",
+            "description": "최초 요청은 pending. 중복 요청은 같은 작업의 현재 상태를 재사용합니다."
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "explanation_id",
+          "status",
+          "model_version"
+        ],
+        "title": "ExplanationAccepted"
+      },
+      "ExplanationRequest": {
+        "properties": {
+          "model_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Version",
+            "description": "저장된 타깃 예측의 모델 버전. 생략하면 서버 FraudGT 버전.",
+            "examples": [
+              "fraudgt-mock-v1"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ExplanationRequest"
+      },
+      "ExplanationResponse": {
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id"
+          },
+          "explanation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Explanation Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_requested",
+              "pending",
+              "completed",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "method": {
+            "type": "string",
+            "const": "GNNExplainer",
+            "title": "Method",
+            "default": "GNNExplainer"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          },
+          "graph_snapshot": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GraphSnapshot"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "모델의 예측 입력을 재현하기 위한 고정 그래프. 화면 graph Query와 독립적입니다."
+          },
+          "edge_importance": {
+            "items": {
+              "$ref": "#/components/schemas/EdgeImportance"
+            },
+            "type": "array",
+            "title": "Edge Importance",
+            "description": "타깃 예측 설명에 대한 Context Edge 중요도. 이상 확률이나 유형 확률이 아닙니다."
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "status",
+          "model_version"
+        ],
+        "title": "ExplanationResponse"
+      },
+      "GraphSnapshot": {
+        "properties": {
+          "graph_id": {
+            "type": "string",
+            "title": "Graph Id"
+          },
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          },
+          "preprocessing_version": {
+            "type": "string",
+            "title": "Preprocessing Version"
+          },
+          "sampler": {
+            "type": "string",
+            "title": "Sampler"
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed"
+          },
+          "hops": {
+            "type": "integer",
+            "maximum": 3.0,
+            "minimum": 1.0,
+            "title": "Hops"
+          },
+          "lookback_days": {
+            "type": "integer",
+            "maximum": 30.0,
+            "minimum": 1.0,
+            "title": "Lookback Days"
+          },
+          "edge_transaction_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Edge Transaction Ids"
+          },
+          "node_account_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Node Account Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "graph_id",
+          "transaction_id",
+          "model_version",
+          "preprocessing_version",
+          "sampler",
+          "seed",
+          "hops",
+          "lookback_days",
+          "edge_transaction_ids",
+          "node_account_ids"
+        ],
+        "title": "GraphSnapshot"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8003",
+      "description": "Local Mock service default"
+    }
+  ],
+  "x-service": "explanation"
+}

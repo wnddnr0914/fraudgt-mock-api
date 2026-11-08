@@ -1,0 +1,14 @@
+{
+  "note": "Example aliases for this synthetic fixture only. Inspect actual imported classes before configuring a real mapping.",
+  "dataset_label_to_model_label": {
+    "SyntheticNormal": null,
+    "SyntheticCandidate": null
+  },
+  "model_labels": [
+    "Fan-In",
+    "Fan-Out",
+    "Cycle",
+    "Scatter-Gather",
+    "Layering"
+  ]
+}

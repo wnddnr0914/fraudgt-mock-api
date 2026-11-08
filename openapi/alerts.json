@@ -1,0 +1,715 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FraudGT AML — Alert Query API",
+    "description": "프론트엔드·그래프·Agent 연동을 위한 합성 거래 기반 API. 거래 조회·그래프·설명·유형 분석은 서비스별 Base URL로 독립 실행합니다. 실제 SAML-D 행이나 ML 추론 결과가 아닙니다. fraud_score, edge importance, typology confidence는 서로 다른 Mock 출력입니다. 모든 시간 응답은 UTC로 정규화합니다.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/alerts": {
+      "get": {
+        "tags": [
+          "Alerts"
+        ],
+        "summary": "기간별 이상거래 목록",
+        "description": "저장된 Mock 예측을 조회합니다. start <= timestamp < end, 최신 시각·ID 내림차순입니다. 항상 서버 Alert Threshold 이상의 거래만 반환하며 min_score는 추가 필터입니다. total은 페이지를 자르기 전 전체 개수입니다. 실제 추론은 수행하지 않습니다.",
+        "operationId": "list_alerts_api_alerts_get",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "description": "포함할 시작 시각. timezone 필수",
+              "examples": [
+                "2022-11-01T00:00:00Z"
+              ],
+              "title": "Start"
+            },
+            "description": "포함할 시작 시각. timezone 필수"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "description": "제외할 종료 시각. timezone 필수",
+              "examples": [
+                "2022-11-02T00:00:00Z"
+              ],
+              "title": "End"
+            },
+            "description": "제외할 종료 시각. timezone 필수"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "1부터 시작하는 페이지",
+              "default": 1,
+              "title": "Page"
+            },
+            "description": "1부터 시작하는 페이지"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "페이지 크기, 최대 100",
+              "default": 20,
+              "title": "Page Size"
+            },
+            "description": "페이지 크기, 최대 100"
+          },
+          {
+            "name": "min_score",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "추가 점수 하한. 생략 시 서버 Alert Threshold",
+              "title": "Min Score"
+            },
+            "description": "추가 점수 하한. 생략 시 서버 Alert Threshold"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertListResponse"
+                },
+                "examples": {
+                  "fixture": {
+                    "summary": "합성 Fixture 응답",
+                    "value": {
+                      "total": 7,
+                      "page": 1,
+                      "page_size": 20,
+                      "alerts": [
+                        {
+                          "transaction_id": "TX000006",
+                          "timestamp": "2022-11-01T10:15:00Z",
+                          "sender_account": "F",
+                          "receiver_account": "D",
+                          "amount": 2500.0,
+                          "currency": "USD",
+                          "fraud_score": 0.95,
+                          "is_alert": true,
+                          "model_version": "fraudgt-mock-v1",
+                          "predicted_typology": "Cycle",
+                          "typology_confidence": 0.78,
+                          "typology_model_version": "typology-mock-v1",
+                          "status": "unreviewed"
+                        },
+                        {
+                          "transaction_id": "TX000005",
+                          "timestamp": "2022-11-01T10:12:00Z",
+                          "sender_account": "E",
+                          "receiver_account": "F",
+                          "amount": 2600.0,
+                          "currency": "USD",
+                          "fraud_score": 0.93,
+                          "is_alert": true,
+                          "model_version": "fraudgt-mock-v1",
+                          "predicted_typology": null,
+                          "typology_confidence": null,
+                          "typology_model_version": null,
+                          "status": "unreviewed"
+                        },
+                        {
+                          "transaction_id": "TX000004",
+                          "timestamp": "2022-11-01T10:10:00Z",
+                          "sender_account": "D",
+                          "receiver_account": "E",
+                          "amount": 2700.0,
+                          "currency": "USD",
+                          "fraud_score": 0.9,
+                          "is_alert": true,
+                          "model_version": "fraudgt-mock-v1",
+                          "predicted_typology": null,
+                          "typology_confidence": null,
+                          "typology_model_version": null,
+                          "status": "unreviewed"
+                        },
+                        {
+                          "transaction_id": "TX000003",
+                          "timestamp": "2022-11-01T10:07:00Z",
+                          "sender_account": "B",
+                          "receiver_account": "D",
+                          "amount": 2800.0,
+                          "currency": "USD",
+                          "fraud_score": 0.81,
+                          "is_alert": true,
+                          "model_version": "fraudgt-mock-v1",
+                          "predicted_typology": "Layering",
+                          "typology_confidence": 0.72,
+                          "typology_model_version": "typology-mock-v1",
+                          "status": "unreviewed"
+                        },
+                        {
+                          "transaction_id": "TX000013",
+                          "timestamp": "2022-11-01T10:06:30Z",
+                          "sender_account": "B",
+                          "receiver_account": "J",
+                          "amount": 350.0,
+                          "currency": "USD",
+                          "fraud_score": 0.87,
+                          "is_alert": true,
+                          "model_version": "fraudgt-mock-v1",
+                          "predicted_typology": "Fan-Out",
+                          "typology_confidence": 0.78,
+                          "typology_model_version": "typology-mock-v1",
+                          "status": "unreviewed"
+                        },
+                        {
+                          "transaction_id": "TX000012",
+                          "timestamp": "2022-11-01T10:06:00Z",
+                          "sender_account": "B",
+                          "receiver_account": "I",
+                          "amount": 400.0,
+                          "currency": "USD",
+                          "fraud_score": 0.86,
+                          "is_alert": true,
+                          "model_version": "fraudgt-mock-v1",
+                          "predicted_typology": "Fan-Out",
+                          "typology_confidence": 0.78,
+                          "typology_model_version": "typology-mock-v1",
+                          "status": "unreviewed"
+                        },
+                        {
+                          "transaction_id": "TX000002",
+                          "timestamp": "2022-11-01T10:03:00Z",
+                          "sender_account": "C",
+                          "receiver_account": "B",
+                          "amount": 2000.0,
+                          "currency": "USD",
+                          "fraud_score": 0.92,
+                          "is_alert": true,
+                          "model_version": "fraudgt-mock-v1",
+                          "predicted_typology": "Fan-In",
+                          "typology_confidence": 0.78,
+                          "typology_model_version": "typology-mock-v1",
+                          "status": "unreviewed"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "start must be earlier than end",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_PERIOD",
+                    "message": "start must be earlier than end",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request parameters are invalid",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "Request parameters are invalid",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An internal error occurred",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INTERNAL_ERROR",
+                    "message": "An internal error occurred",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/alerts/{transaction_id}": {
+      "get": {
+        "tags": [
+          "Alerts"
+        ],
+        "summary": "이상거래 상세",
+        "description": "거래·고정 FraudGT Mock 점수·유형 예측을 반환합니다. 존재하지 않거나 서버 임계값 미만인 거래는 404입니다. 정답 라벨은 반환하지 않습니다.",
+        "operationId": "get_alert_api_alerts__transaction_id__get",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160,
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "description": "조회할 개별 거래 ID. 계좌 ID와 구분합니다.",
+              "examples": [
+                "TX000003"
+              ],
+              "title": "Transaction Id"
+            },
+            "description": "조회할 개별 거래 ID. 계좌 ID와 구분합니다."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertDetail"
+                },
+                "examples": {
+                  "fixture": {
+                    "summary": "합성 Fixture 응답",
+                    "value": {
+                      "transaction_id": "TX000003",
+                      "timestamp": "2022-11-01T10:07:00Z",
+                      "sender_account": "B",
+                      "receiver_account": "D",
+                      "amount": 2800.0,
+                      "currency": "USD",
+                      "fraud_score": 0.81,
+                      "is_alert": true,
+                      "model_version": "fraudgt-mock-v1",
+                      "predicted_typology": "Layering",
+                      "typology_confidence": 0.72,
+                      "typology_model_version": "typology-mock-v1",
+                      "status": "unreviewed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction is absent or below the configured alert threshold",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "ALERT_NOT_FOUND",
+                    "message": "Transaction is absent or below the configured alert threshold",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request parameters are invalid",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "Request parameters are invalid",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An internal error occurred",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INTERNAL_ERROR",
+                    "message": "An internal error occurred",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlertDetail": {
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id",
+            "description": "개별 송금 거래 ID. 계좌 ID, 모델 Node Index와 다릅니다.",
+            "examples": [
+              "TX000003"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp",
+            "description": "거래 시각. 응답은 UTC ISO 8601입니다."
+          },
+          "sender_account": {
+            "type": "string",
+            "title": "Sender Account",
+            "description": "원본 송금 계좌 식별자."
+          },
+          "receiver_account": {
+            "type": "string",
+            "title": "Receiver Account",
+            "description": "원본 수취 계좌 식별자."
+          },
+          "amount": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Amount",
+            "description": "송금 원통화 금액. 다른 통화와 합산하지 않습니다."
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "description": "원본 Payment_currency 값. 반드시 ISO 통화 코드인 것은 아닙니다."
+          },
+          "fraud_score": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Fraud Score",
+            "description": "저장된 FraudGT Mock 이상 점수. Explainer 중요도, 정답 라벨과 별개입니다."
+          },
+          "is_alert": {
+            "type": "boolean",
+            "title": "Is Alert",
+            "description": "fraud_score >= 서버 alert_threshold."
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version",
+            "description": "이상 점수를 생성한 FraudGT 버전.",
+            "examples": [
+              "fraudgt-mock-v1"
+            ]
+          },
+          "predicted_typology": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Predicted Typology",
+            "description": "독립 유형 모델의 Mock 예측명. 정답 라벨이 아닙니다."
+          },
+          "typology_confidence": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Typology Confidence",
+            "description": "유형 모델의 신뢰도. FraudGT 점수와 별개입니다."
+          },
+          "typology_model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Typology Model Version",
+            "description": "유형 분석이 없으면 null."
+          },
+          "status": {
+            "type": "string",
+            "const": "unreviewed",
+            "title": "Status",
+            "default": "unreviewed"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "timestamp",
+          "sender_account",
+          "receiver_account",
+          "amount",
+          "currency",
+          "fraud_score",
+          "is_alert",
+          "model_version"
+        ],
+        "title": "AlertDetail",
+        "description": "동일한 거래 ID를 다른 기능에 전달할 수 있는 거래 상세."
+      },
+      "AlertItem": {
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id",
+            "description": "개별 송금 거래 ID. 계좌 ID, 모델 Node Index와 다릅니다.",
+            "examples": [
+              "TX000003"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp",
+            "description": "거래 시각. 응답은 UTC ISO 8601입니다."
+          },
+          "sender_account": {
+            "type": "string",
+            "title": "Sender Account",
+            "description": "원본 송금 계좌 식별자."
+          },
+          "receiver_account": {
+            "type": "string",
+            "title": "Receiver Account",
+            "description": "원본 수취 계좌 식별자."
+          },
+          "amount": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Amount",
+            "description": "송금 원통화 금액. 다른 통화와 합산하지 않습니다."
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "description": "원본 Payment_currency 값. 반드시 ISO 통화 코드인 것은 아닙니다."
+          },
+          "fraud_score": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Fraud Score",
+            "description": "저장된 FraudGT Mock 이상 점수. Explainer 중요도, 정답 라벨과 별개입니다."
+          },
+          "is_alert": {
+            "type": "boolean",
+            "title": "Is Alert",
+            "description": "fraud_score >= 서버 alert_threshold."
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version",
+            "description": "이상 점수를 생성한 FraudGT 버전.",
+            "examples": [
+              "fraudgt-mock-v1"
+            ]
+          },
+          "predicted_typology": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Predicted Typology",
+            "description": "독립 유형 모델의 Mock 예측명. 정답 라벨이 아닙니다."
+          },
+          "typology_confidence": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Typology Confidence",
+            "description": "유형 모델의 신뢰도. FraudGT 점수와 별개입니다."
+          },
+          "typology_model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Typology Model Version",
+            "description": "유형 분석이 없으면 null."
+          },
+          "status": {
+            "type": "string",
+            "const": "unreviewed",
+            "title": "Status",
+            "default": "unreviewed"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "timestamp",
+          "sender_account",
+          "receiver_account",
+          "amount",
+          "currency",
+          "fraud_score",
+          "is_alert",
+          "model_version"
+        ],
+        "title": "AlertItem"
+      },
+      "AlertListResponse": {
+        "properties": {
+          "total": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Total",
+            "description": "페이지 제한 적용 전 전체 필터 결과 수."
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Page"
+          },
+          "page_size": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Page Size"
+          },
+          "alerts": {
+            "items": {
+              "$ref": "#/components/schemas/AlertItem"
+            },
+            "type": "array",
+            "title": "Alerts"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "total",
+          "page",
+          "page_size",
+          "alerts"
+        ],
+        "title": "AlertListResponse"
+      },
+      "ErrorInfo": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code",
+            "description": "Stable machine-readable error code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable reason"
+          },
+          "details": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Details",
+            "description": "Parameter validation details"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorInfo"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8001",
+      "description": "Local Mock service default"
+    }
+  ],
+  "x-service": "alerts"
+}

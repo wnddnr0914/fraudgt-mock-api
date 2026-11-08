@@ -1,0 +1,304 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FraudGT AML — Typology Analysis API",
+    "description": "프론트엔드·그래프·Agent 연동을 위한 합성 거래 기반 API. 거래 조회·그래프·설명·유형 분석은 서비스별 Base URL로 독립 실행합니다. 실제 SAML-D 행이나 ML 추론 결과가 아닙니다. fraud_score, edge importance, typology confidence는 서로 다른 Mock 출력입니다. 모든 시간 응답은 UTC로 정규화합니다.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/alerts/{transaction_id}/analysis": {
+      "get": {
+        "tags": [
+          "Typology"
+        ],
+        "summary": "자금세탁 유형 Mock 분석",
+        "description": "FraudGT 점수와 별도 유형 모델 예측·구조화된 근거를 반환합니다. 예측은 정답이나 규칙 검증이 아니며 verification_status=unverified입니다. 미분석 거래도 정상 응답합니다. 관련 ID와 방향성 계좌 경로는 공통 거래를 참조합니다. Agent가 이 정보를 사용할 수 있으며 이 서버는 보고서를 생성하지 않습니다.",
+        "operationId": "get_analysis_api_alerts__transaction_id__analysis_get",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160,
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "description": "조회할 개별 거래 ID. 계좌 ID와 구분합니다.",
+              "examples": [
+                "TX000003"
+              ],
+              "title": "Transaction Id"
+            },
+            "description": "조회할 개별 거래 ID. 계좌 ID와 구분합니다."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResponse"
+                },
+                "examples": {
+                  "fixture": {
+                    "summary": "합성 Fixture 응답",
+                    "value": {
+                      "transaction_id": "TX000003",
+                      "fraud_score": 0.81,
+                      "model_version": "fraudgt-mock-v1",
+                      "typology": {
+                        "predicted_type": "Layering",
+                        "confidence": 0.72,
+                        "verification_status": "unverified",
+                        "model_version": "typology-mock-v1"
+                      },
+                      "evidence": {
+                        "related_transaction_ids": [
+                          "TX000001",
+                          "TX000002",
+                          "TX000003"
+                        ],
+                        "account_path": [
+                          "A",
+                          "B",
+                          "D"
+                        ],
+                        "description": "B 계좌로 여러 거래가 유입된 뒤 D 계좌로 송금된 거래 흐름이 관찰됨."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction is absent or below the configured alert threshold",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "ALERT_NOT_FOUND",
+                    "message": "Transaction is absent or below the configured alert threshold",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request parameters are invalid",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "Request parameters are invalid",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An internal error occurred",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INTERNAL_ERROR",
+                    "message": "An internal error occurred",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalysisEvidence": {
+        "properties": {
+          "related_transaction_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Related Transaction Ids",
+            "description": "공통 거래 Fixture에 존재하는 근거 거래 ID들."
+          },
+          "account_path": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Account Path",
+            "description": "근거 거래들에서 실제 송금 방향으로 연결되는 계좌 경로."
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "description": "Mock 거래 구조에 관한 관찰. 범죄 확정이나 Rule 검증 결과가 아닙니다."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "related_transaction_ids",
+          "account_path",
+          "description"
+        ],
+        "title": "AnalysisEvidence"
+      },
+      "AnalysisResponse": {
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id"
+          },
+          "fraud_score": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Fraud Score"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version",
+            "description": "FraudGT 점수의 모델 버전."
+          },
+          "typology": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TypologyPrediction"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "분석이 아직 없으면 null."
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnalysisEvidence"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "분석이 아직 없으면 null."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "fraud_score",
+          "model_version"
+        ],
+        "title": "AnalysisResponse"
+      },
+      "ErrorInfo": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code",
+            "description": "Stable machine-readable error code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable reason"
+          },
+          "details": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Details",
+            "description": "Parameter validation details"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorInfo"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse"
+      },
+      "TypologyPrediction": {
+        "properties": {
+          "predicted_type": {
+            "type": "string",
+            "title": "Predicted Type",
+            "description": "Mock 출력 라벨. SAML-D Laundering_type 정답과 자동으로 같다고 보지 않습니다."
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "description": "독립적인 유형 모델 신뢰도. FraudGT 점수와 별개입니다."
+          },
+          "verification_status": {
+            "type": "string",
+            "enum": [
+              "unverified",
+              "verified",
+              "rejected"
+            ],
+            "title": "Verification Status",
+            "description": "별도 구조 검증 상태. 현재 Mock은 미검증 unverified입니다."
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "predicted_type",
+          "confidence",
+          "verification_status",
+          "model_version"
+        ],
+        "title": "TypologyPrediction"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8004",
+      "description": "Local Mock service default"
+    }
+  ],
+  "x-service": "analysis"
+}

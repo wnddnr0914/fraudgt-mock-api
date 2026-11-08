@@ -1,0 +1,503 @@
+[
+  {
+    "title": "기간별 이상거래 목록",
+    "service": "alerts",
+    "base_url": "http://localhost:8001",
+    "method": "GET",
+    "url": "/api/alerts?start=2022-11-01T00%3A00%3A00Z&end=2022-11-02T00%3A00%3A00Z",
+    "request_url": "http://localhost:8001/api/alerts?start=2022-11-01T00%3A00%3A00Z&end=2022-11-02T00%3A00%3A00Z",
+    "request_body": null,
+    "status_code": 200,
+    "response": {
+      "total": 7,
+      "page": 1,
+      "page_size": 20,
+      "alerts": [
+        {
+          "transaction_id": "TX000006",
+          "timestamp": "2022-11-01T10:15:00Z",
+          "sender_account": "F",
+          "receiver_account": "D",
+          "amount": 2500.0,
+          "currency": "USD",
+          "fraud_score": 0.95,
+          "is_alert": true,
+          "model_version": "fraudgt-mock-v1",
+          "predicted_typology": "Cycle",
+          "typology_confidence": 0.78,
+          "typology_model_version": "typology-mock-v1",
+          "status": "unreviewed"
+        },
+        {
+          "transaction_id": "TX000005",
+          "timestamp": "2022-11-01T10:12:00Z",
+          "sender_account": "E",
+          "receiver_account": "F",
+          "amount": 2600.0,
+          "currency": "USD",
+          "fraud_score": 0.93,
+          "is_alert": true,
+          "model_version": "fraudgt-mock-v1",
+          "predicted_typology": null,
+          "typology_confidence": null,
+          "typology_model_version": null,
+          "status": "unreviewed"
+        },
+        {
+          "transaction_id": "TX000004",
+          "timestamp": "2022-11-01T10:10:00Z",
+          "sender_account": "D",
+          "receiver_account": "E",
+          "amount": 2700.0,
+          "currency": "USD",
+          "fraud_score": 0.9,
+          "is_alert": true,
+          "model_version": "fraudgt-mock-v1",
+          "predicted_typology": null,
+          "typology_confidence": null,
+          "typology_model_version": null,
+          "status": "unreviewed"
+        },
+        {
+          "transaction_id": "TX000003",
+          "timestamp": "2022-11-01T10:07:00Z",
+          "sender_account": "B",
+          "receiver_account": "D",
+          "amount": 2800.0,
+          "currency": "USD",
+          "fraud_score": 0.81,
+          "is_alert": true,
+          "model_version": "fraudgt-mock-v1",
+          "predicted_typology": "Layering",
+          "typology_confidence": 0.72,
+          "typology_model_version": "typology-mock-v1",
+          "status": "unreviewed"
+        },
+        {
+          "transaction_id": "TX000013",
+          "timestamp": "2022-11-01T10:06:30Z",
+          "sender_account": "B",
+          "receiver_account": "J",
+          "amount": 350.0,
+          "currency": "USD",
+          "fraud_score": 0.87,
+          "is_alert": true,
+          "model_version": "fraudgt-mock-v1",
+          "predicted_typology": "Fan-Out",
+          "typology_confidence": 0.78,
+          "typology_model_version": "typology-mock-v1",
+          "status": "unreviewed"
+        },
+        {
+          "transaction_id": "TX000012",
+          "timestamp": "2022-11-01T10:06:00Z",
+          "sender_account": "B",
+          "receiver_account": "I",
+          "amount": 400.0,
+          "currency": "USD",
+          "fraud_score": 0.86,
+          "is_alert": true,
+          "model_version": "fraudgt-mock-v1",
+          "predicted_typology": "Fan-Out",
+          "typology_confidence": 0.78,
+          "typology_model_version": "typology-mock-v1",
+          "status": "unreviewed"
+        },
+        {
+          "transaction_id": "TX000002",
+          "timestamp": "2022-11-01T10:03:00Z",
+          "sender_account": "C",
+          "receiver_account": "B",
+          "amount": 2000.0,
+          "currency": "USD",
+          "fraud_score": 0.92,
+          "is_alert": true,
+          "model_version": "fraudgt-mock-v1",
+          "predicted_typology": "Fan-In",
+          "typology_confidence": 0.78,
+          "typology_model_version": "typology-mock-v1",
+          "status": "unreviewed"
+        }
+      ]
+    }
+  },
+  {
+    "title": "거래 상세",
+    "service": "alerts",
+    "base_url": "http://localhost:8001",
+    "method": "GET",
+    "url": "/api/alerts/TX000003",
+    "request_url": "http://localhost:8001/api/alerts/TX000003",
+    "request_body": null,
+    "status_code": 200,
+    "response": {
+      "transaction_id": "TX000003",
+      "timestamp": "2022-11-01T10:07:00Z",
+      "sender_account": "B",
+      "receiver_account": "D",
+      "amount": 2800.0,
+      "currency": "USD",
+      "fraud_score": 0.81,
+      "is_alert": true,
+      "model_version": "fraudgt-mock-v1",
+      "predicted_typology": "Layering",
+      "typology_confidence": 0.72,
+      "typology_model_version": "typology-mock-v1",
+      "status": "unreviewed"
+    }
+  },
+  {
+    "title": "주변 거래 그래프",
+    "service": "graph",
+    "base_url": "http://localhost:8002",
+    "method": "GET",
+    "url": "/api/alerts/TX000003/graph?hops=2&lookback_days=7",
+    "request_url": "http://localhost:8002/api/alerts/TX000003/graph?hops=2&lookback_days=7",
+    "request_body": null,
+    "status_code": 200,
+    "response": {
+      "transaction_id": "TX000003",
+      "graph": {
+        "hops": 2,
+        "lookback_days": 7,
+        "neighborhood_direction": "both",
+        "window_start": "2022-10-25T10:07:00Z",
+        "window_end": "2022-11-01T10:07:00Z",
+        "nodes": [
+          {
+            "id": "A"
+          },
+          {
+            "id": "B"
+          },
+          {
+            "id": "BORDER"
+          },
+          {
+            "id": "C"
+          },
+          {
+            "id": "D"
+          },
+          {
+            "id": "G"
+          },
+          {
+            "id": "I"
+          },
+          {
+            "id": "J"
+          },
+          {
+            "id": "N"
+          },
+          {
+            "id": "R"
+          }
+        ],
+        "edges": [
+          {
+            "id": "TX000030",
+            "source": "BORDER",
+            "target": "B",
+            "amount": 20.0,
+            "currency": "USD",
+            "timestamp": "2022-10-25T10:07:00Z",
+            "is_target": false
+          },
+          {
+            "id": "TX000015",
+            "source": "R",
+            "target": "N",
+            "amount": 550.0,
+            "currency": "USD",
+            "timestamp": "2022-10-27T08:00:00Z",
+            "is_target": false
+          },
+          {
+            "id": "TX000014",
+            "source": "N",
+            "target": "B",
+            "amount": 600.0,
+            "currency": "USD",
+            "timestamp": "2022-10-28T08:00:00Z",
+            "is_target": false
+          },
+          {
+            "id": "TX000008",
+            "source": "G",
+            "target": "A",
+            "amount": 900.0,
+            "currency": "USD",
+            "timestamp": "2022-10-31T09:00:00Z",
+            "is_target": false
+          },
+          {
+            "id": "TX000001",
+            "source": "A",
+            "target": "B",
+            "amount": 1000.0,
+            "currency": "USD",
+            "timestamp": "2022-11-01T10:01:00Z",
+            "is_target": false
+          },
+          {
+            "id": "TX000029",
+            "source": "A",
+            "target": "B",
+            "amount": 1000.0,
+            "currency": "USD",
+            "timestamp": "2022-11-01T10:01:00Z",
+            "is_target": false
+          },
+          {
+            "id": "TX000007",
+            "source": "A",
+            "target": "B",
+            "amount": 1000.0,
+            "currency": "USD",
+            "timestamp": "2022-11-01T10:02:00Z",
+            "is_target": false
+          },
+          {
+            "id": "TX000002",
+            "source": "C",
+            "target": "B",
+            "amount": 2000.0,
+            "currency": "USD",
+            "timestamp": "2022-11-01T10:03:00Z",
+            "is_target": false
+          },
+          {
+            "id": "TX000012",
+            "source": "B",
+            "target": "I",
+            "amount": 400.0,
+            "currency": "USD",
+            "timestamp": "2022-11-01T10:06:00Z",
+            "is_target": false
+          },
+          {
+            "id": "TX000013",
+            "source": "B",
+            "target": "J",
+            "amount": 350.0,
+            "currency": "USD",
+            "timestamp": "2022-11-01T10:06:30Z",
+            "is_target": false
+          },
+          {
+            "id": "TX000003",
+            "source": "B",
+            "target": "D",
+            "amount": 2800.0,
+            "currency": "USD",
+            "timestamp": "2022-11-01T10:07:00Z",
+            "is_target": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "title": "설명 요청 전 상태",
+    "service": "explanation",
+    "base_url": "http://localhost:8003",
+    "method": "GET",
+    "url": "/api/alerts/TX000003/explanation",
+    "request_url": "http://localhost:8003/api/alerts/TX000003/explanation",
+    "request_body": null,
+    "status_code": 200,
+    "response": {
+      "transaction_id": "TX000003",
+      "explanation_id": null,
+      "status": "not_requested",
+      "method": "GNNExplainer",
+      "model_version": "fraudgt-mock-v1",
+      "graph_snapshot": null,
+      "edge_importance": [],
+      "error": null
+    }
+  },
+  {
+    "title": "설명 작업 요청",
+    "service": "explanation",
+    "base_url": "http://localhost:8003",
+    "method": "POST",
+    "url": "/api/alerts/TX000003/explanation",
+    "request_url": "http://localhost:8003/api/alerts/TX000003/explanation",
+    "request_body": {
+      "model_version": "fraudgt-mock-v1"
+    },
+    "status_code": 202,
+    "response": {
+      "transaction_id": "TX000003",
+      "explanation_id": "EXP-94270638dcd55fec44542f7b72cdacd7e6e55ebf3aaf70ef1418d3cfe1503e78",
+      "status": "pending",
+      "model_version": "fraudgt-mock-v1"
+    }
+  },
+  {
+    "title": "설명 결과",
+    "service": "explanation",
+    "base_url": "http://localhost:8003",
+    "method": "GET",
+    "url": "/api/alerts/TX000003/explanation",
+    "request_url": "http://localhost:8003/api/alerts/TX000003/explanation",
+    "request_body": null,
+    "status_code": 200,
+    "response": {
+      "transaction_id": "TX000003",
+      "explanation_id": "EXP-94270638dcd55fec44542f7b72cdacd7e6e55ebf3aaf70ef1418d3cfe1503e78",
+      "status": "completed",
+      "method": "GNNExplainer",
+      "model_version": "fraudgt-mock-v1",
+      "graph_snapshot": {
+        "graph_id": "SNAPSHOT-TX000003-v1",
+        "transaction_id": "TX000003",
+        "model_version": "fraudgt-mock-v1",
+        "preprocessing_version": "samld-mock-preprocessing-v1",
+        "sampler": "fixed-fixture-undirected-neighborhood",
+        "seed": 42,
+        "hops": 2,
+        "lookback_days": 7,
+        "edge_transaction_ids": [
+          "TX000001",
+          "TX000002",
+          "TX000003",
+          "TX000007",
+          "TX000008",
+          "TX000012",
+          "TX000013",
+          "TX000014",
+          "TX000015",
+          "TX000029",
+          "TX000030"
+        ],
+        "node_account_ids": [
+          "A",
+          "B",
+          "BORDER",
+          "C",
+          "D",
+          "G",
+          "I",
+          "J",
+          "N",
+          "R"
+        ]
+      },
+      "edge_importance": [
+        {
+          "transaction_id": "TX000001",
+          "importance": 0.75
+        },
+        {
+          "transaction_id": "TX000002",
+          "importance": 0.86
+        },
+        {
+          "transaction_id": "TX000007",
+          "importance": 0.2
+        },
+        {
+          "transaction_id": "TX000008",
+          "importance": 0.3
+        },
+        {
+          "transaction_id": "TX000012",
+          "importance": 0.7
+        },
+        {
+          "transaction_id": "TX000013",
+          "importance": 0.8
+        },
+        {
+          "transaction_id": "TX000014",
+          "importance": 0.2
+        },
+        {
+          "transaction_id": "TX000015",
+          "importance": 0.3
+        },
+        {
+          "transaction_id": "TX000029",
+          "importance": 0.3
+        },
+        {
+          "transaction_id": "TX000030",
+          "importance": 0.4
+        }
+      ],
+      "error": null
+    }
+  },
+  {
+    "title": "유형 분석",
+    "service": "analysis",
+    "base_url": "http://localhost:8004",
+    "method": "GET",
+    "url": "/api/alerts/TX000003/analysis",
+    "request_url": "http://localhost:8004/api/alerts/TX000003/analysis",
+    "request_body": null,
+    "status_code": 200,
+    "response": {
+      "transaction_id": "TX000003",
+      "fraud_score": 0.81,
+      "model_version": "fraudgt-mock-v1",
+      "typology": {
+        "predicted_type": "Layering",
+        "confidence": 0.72,
+        "verification_status": "unverified",
+        "model_version": "typology-mock-v1"
+      },
+      "evidence": {
+        "related_transaction_ids": [
+          "TX000001",
+          "TX000002",
+          "TX000003"
+        ],
+        "account_path": [
+          "A",
+          "B",
+          "D"
+        ],
+        "description": "B 계좌로 여러 거래가 유입된 뒤 D 계좌로 송금된 거래 흐름이 관찰됨."
+      }
+    }
+  },
+  {
+    "title": "유형 분석 없음",
+    "service": "analysis",
+    "base_url": "http://localhost:8004",
+    "method": "GET",
+    "url": "/api/alerts/TX000017/analysis",
+    "request_url": "http://localhost:8004/api/alerts/TX000017/analysis",
+    "request_body": null,
+    "status_code": 200,
+    "response": {
+      "transaction_id": "TX000017",
+      "fraud_score": 0.91,
+      "model_version": "fraudgt-mock-v1",
+      "typology": null,
+      "evidence": null
+    }
+  },
+  {
+    "title": "없는 거래 오류",
+    "service": "alerts",
+    "base_url": "http://localhost:8001",
+    "method": "GET",
+    "url": "/api/alerts/DOES_NOT_EXIST",
+    "request_url": "http://localhost:8001/api/alerts/DOES_NOT_EXIST",
+    "request_body": null,
+    "status_code": 404,
+    "response": {
+      "error": {
+        "code": "ALERT_NOT_FOUND",
+        "message": "해당 거래가 없거나 현재 서버 임계값 이상의 Alert가 아닙니다.",
+        "details": []
+      }
+    }
+  }
+]

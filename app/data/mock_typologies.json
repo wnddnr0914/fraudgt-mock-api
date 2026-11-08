@@ -1,0 +1,122 @@
+[
+  {
+    "transaction_id": "TX000002",
+    "predicted_type": "Fan-In",
+    "confidence": 0.78,
+    "verification_status": "unverified",
+    "model_version": "typology-mock-v1",
+    "related_transaction_ids": [
+      "TX000001",
+      "TX000002"
+    ],
+    "account_path": [
+      "A",
+      "B"
+    ],
+    "description": "A, C 계좌에서 B 계좌로 송금된 흐름이 관찰됨."
+  },
+  {
+    "transaction_id": "TX000003",
+    "predicted_type": "Layering",
+    "confidence": 0.72,
+    "verification_status": "unverified",
+    "model_version": "typology-mock-v1",
+    "related_transaction_ids": [
+      "TX000001",
+      "TX000002",
+      "TX000003"
+    ],
+    "account_path": [
+      "A",
+      "B",
+      "D"
+    ],
+    "description": "B 계좌로 여러 거래가 유입된 뒤 D 계좌로 송금된 거래 흐름이 관찰됨."
+  },
+  {
+    "transaction_id": "TX000006",
+    "predicted_type": "Cycle",
+    "confidence": 0.78,
+    "verification_status": "unverified",
+    "model_version": "typology-mock-v1",
+    "related_transaction_ids": [
+      "TX000004",
+      "TX000005",
+      "TX000006"
+    ],
+    "account_path": [
+      "D",
+      "E",
+      "F",
+      "D"
+    ],
+    "description": "D→E→F→D 순환 거래가 관찰됨."
+  },
+  {
+    "transaction_id": "TX000012",
+    "predicted_type": "Fan-Out",
+    "confidence": 0.78,
+    "verification_status": "unverified",
+    "model_version": "typology-mock-v1",
+    "related_transaction_ids": [
+      "TX000012"
+    ],
+    "account_path": [
+      "B",
+      "I"
+    ],
+    "description": "B 계좌에서 I 계좌로 송금된 거래가 관찰됨. 추가 분산 여부는 검증되지 않음."
+  },
+  {
+    "transaction_id": "TX000013",
+    "predicted_type": "Fan-Out",
+    "confidence": 0.78,
+    "verification_status": "unverified",
+    "model_version": "typology-mock-v1",
+    "related_transaction_ids": [
+      "TX000012",
+      "TX000013"
+    ],
+    "account_path": [
+      "B",
+      "J"
+    ],
+    "description": "B 계좌에서 I, J 계좌로 분산된 송금이 관찰됨."
+  },
+  {
+    "transaction_id": "TX000023",
+    "predicted_type": "Layering",
+    "confidence": 0.78,
+    "verification_status": "unverified",
+    "model_version": "typology-mock-v1",
+    "related_transaction_ids": [
+      "TX000022",
+      "TX000023"
+    ],
+    "account_path": [
+      "C",
+      "B",
+      "D"
+    ],
+    "description": "C→B→D 송금 경로가 관찰됨."
+  },
+  {
+    "transaction_id": "TX000026",
+    "predicted_type": "Cycle",
+    "confidence": 0.78,
+    "verification_status": "unverified",
+    "model_version": "typology-mock-v1",
+    "related_transaction_ids": [
+      "TX000024",
+      "TX000025",
+      "TX000026"
+    ],
+    "account_path": [
+      "D",
+      "E",
+      "F",
+      "D"
+    ],
+    "description": "D→E→F→D 순환 거래가 관찰됨."
+  }
+]

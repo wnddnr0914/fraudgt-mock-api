@@ -1,0 +1,1195 @@
+[
+  {
+    "transaction_id": "TX000002",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000002-v1",
+      "transaction_id": "TX000002",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000007",
+        "TX000008",
+        "TX000014",
+        "TX000015",
+        "TX000029",
+        "TX000030"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "BORDER",
+        "C",
+        "G",
+        "N",
+        "R"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000008",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000015",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000030",
+        "importance": 0.4
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000003",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000003-v1",
+      "transaction_id": "TX000003",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000003",
+        "TX000007",
+        "TX000008",
+        "TX000012",
+        "TX000013",
+        "TX000014",
+        "TX000015",
+        "TX000029",
+        "TX000030"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "BORDER",
+        "C",
+        "D",
+        "G",
+        "I",
+        "J",
+        "N",
+        "R"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000002",
+        "importance": 0.86
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000008",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000012",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000013",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000015",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000030",
+        "importance": 0.4
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000004",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000004-v1",
+      "transaction_id": "TX000004",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000003",
+        "TX000004",
+        "TX000007",
+        "TX000012",
+        "TX000013",
+        "TX000014",
+        "TX000029",
+        "TX000031"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "FUTURE",
+        "I",
+        "J",
+        "N"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000002",
+        "importance": 0.86
+      },
+      {
+        "transaction_id": "TX000003",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000012",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000013",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000031",
+        "importance": 0.5
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000005",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000005-v1",
+      "transaction_id": "TX000005",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000003",
+        "TX000004",
+        "TX000005"
+      ],
+      "node_account_ids": [
+        "B",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000003",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000004",
+        "importance": 0.6
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000006",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000006-v1",
+      "transaction_id": "TX000006",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000003",
+        "TX000004",
+        "TX000005",
+        "TX000006",
+        "TX000007",
+        "TX000012",
+        "TX000013",
+        "TX000014",
+        "TX000029",
+        "TX000031"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "FUTURE",
+        "I",
+        "J",
+        "N"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000002",
+        "importance": 0.86
+      },
+      {
+        "transaction_id": "TX000003",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000004",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000005",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000012",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000013",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000031",
+        "importance": 0.5
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000010",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000010-v1",
+      "transaction_id": "TX000010",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000010"
+      ],
+      "node_account_ids": [
+        "B",
+        "OLD"
+      ]
+    },
+    "edge_importance": [],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000012",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000012-v1",
+      "transaction_id": "TX000012",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000007",
+        "TX000008",
+        "TX000012",
+        "TX000014",
+        "TX000015",
+        "TX000029",
+        "TX000030"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "BORDER",
+        "C",
+        "G",
+        "I",
+        "N",
+        "R"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000002",
+        "importance": 0.86
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000008",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000015",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000030",
+        "importance": 0.4
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000013",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000013-v1",
+      "transaction_id": "TX000013",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000007",
+        "TX000008",
+        "TX000012",
+        "TX000013",
+        "TX000014",
+        "TX000015",
+        "TX000029",
+        "TX000030"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "BORDER",
+        "C",
+        "G",
+        "I",
+        "J",
+        "N",
+        "R"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000002",
+        "importance": 0.86
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000008",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000012",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000015",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000030",
+        "importance": 0.4
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000017",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000017-v1",
+      "transaction_id": "TX000017",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000003",
+        "TX000004",
+        "TX000005",
+        "TX000006",
+        "TX000007",
+        "TX000012",
+        "TX000013",
+        "TX000014",
+        "TX000017",
+        "TX000029",
+        "TX000031"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "FUTURE",
+        "I",
+        "J",
+        "K",
+        "N"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000002",
+        "importance": 0.86
+      },
+      {
+        "transaction_id": "TX000003",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000004",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000005",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000006",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000012",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000013",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000031",
+        "importance": 0.5
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000018",
+    "model_version": "fraudgt-mock-v1",
+    "status": "failed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000018-v1",
+      "transaction_id": "TX000018",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000003",
+        "TX000004",
+        "TX000005",
+        "TX000006",
+        "TX000017",
+        "TX000018"
+      ],
+      "node_account_ids": [
+        "B",
+        "D",
+        "E",
+        "F",
+        "K",
+        "L"
+      ]
+    },
+    "edge_importance": [],
+    "error_code": "MOCK_EXPLANATION_FAILED"
+  },
+  {
+    "transaction_id": "TX000022",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000022-v1",
+      "transaction_id": "TX000022",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000003",
+        "TX000004",
+        "TX000005",
+        "TX000006",
+        "TX000007",
+        "TX000008",
+        "TX000012",
+        "TX000013",
+        "TX000014",
+        "TX000017",
+        "TX000019",
+        "TX000022",
+        "TX000029",
+        "TX000031"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "FUTURE",
+        "G",
+        "I",
+        "J",
+        "K",
+        "N"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000002",
+        "importance": 0.86
+      },
+      {
+        "transaction_id": "TX000003",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000004",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000005",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000006",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000008",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000012",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000013",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000017",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000019",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000031",
+        "importance": 0.5
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000023",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000023-v1",
+      "transaction_id": "TX000023",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000003",
+        "TX000004",
+        "TX000005",
+        "TX000006",
+        "TX000007",
+        "TX000008",
+        "TX000012",
+        "TX000013",
+        "TX000014",
+        "TX000017",
+        "TX000018",
+        "TX000019",
+        "TX000022",
+        "TX000023",
+        "TX000029",
+        "TX000031"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "FUTURE",
+        "G",
+        "I",
+        "J",
+        "K",
+        "L",
+        "N"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000002",
+        "importance": 0.86
+      },
+      {
+        "transaction_id": "TX000003",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000004",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000005",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000006",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000008",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000012",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000013",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000017",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000018",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000019",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000022",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000031",
+        "importance": 0.5
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000024",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000024-v1",
+      "transaction_id": "TX000024",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000003",
+        "TX000004",
+        "TX000005",
+        "TX000006",
+        "TX000007",
+        "TX000012",
+        "TX000013",
+        "TX000014",
+        "TX000017",
+        "TX000018",
+        "TX000019",
+        "TX000022",
+        "TX000023",
+        "TX000024",
+        "TX000029",
+        "TX000031"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "FUTURE",
+        "I",
+        "J",
+        "K",
+        "L",
+        "N"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000002",
+        "importance": 0.86
+      },
+      {
+        "transaction_id": "TX000003",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000004",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000005",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000006",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000012",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000013",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000017",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000018",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000019",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000022",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000023",
+        "importance": 0.4
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000031",
+        "importance": 0.5
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000025",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000025-v1",
+      "transaction_id": "TX000025",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000003",
+        "TX000004",
+        "TX000005",
+        "TX000006",
+        "TX000017",
+        "TX000023",
+        "TX000024",
+        "TX000025"
+      ],
+      "node_account_ids": [
+        "B",
+        "D",
+        "E",
+        "F",
+        "K"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000003",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000004",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000005",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000006",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000017",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000023",
+        "importance": 0.4
+      },
+      {
+        "transaction_id": "TX000024",
+        "importance": 0.5
+      }
+    ],
+    "error_code": null
+  },
+  {
+    "transaction_id": "TX000026",
+    "model_version": "fraudgt-mock-v1",
+    "status": "completed",
+    "snapshot": {
+      "graph_id": "SNAPSHOT-TX000026-v1",
+      "transaction_id": "TX000026",
+      "model_version": "fraudgt-mock-v1",
+      "preprocessing_version": "samld-mock-preprocessing-v1",
+      "sampler": "fixed-fixture-undirected-neighborhood",
+      "seed": 42,
+      "hops": 2,
+      "lookback_days": 7,
+      "edge_transaction_ids": [
+        "TX000001",
+        "TX000002",
+        "TX000003",
+        "TX000004",
+        "TX000005",
+        "TX000006",
+        "TX000007",
+        "TX000012",
+        "TX000013",
+        "TX000014",
+        "TX000017",
+        "TX000018",
+        "TX000019",
+        "TX000022",
+        "TX000023",
+        "TX000024",
+        "TX000025",
+        "TX000026",
+        "TX000029",
+        "TX000031"
+      ],
+      "node_account_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "FUTURE",
+        "I",
+        "J",
+        "K",
+        "L",
+        "N"
+      ]
+    },
+    "edge_importance": [
+      {
+        "transaction_id": "TX000001",
+        "importance": 0.75
+      },
+      {
+        "transaction_id": "TX000002",
+        "importance": 0.86
+      },
+      {
+        "transaction_id": "TX000003",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000004",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000005",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000006",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000007",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000012",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000013",
+        "importance": 0.8
+      },
+      {
+        "transaction_id": "TX000014",
+        "importance": 0.2
+      },
+      {
+        "transaction_id": "TX000017",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000018",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000019",
+        "importance": 0.7
+      },
+      {
+        "transaction_id": "TX000022",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000023",
+        "importance": 0.4
+      },
+      {
+        "transaction_id": "TX000024",
+        "importance": 0.5
+      },
+      {
+        "transaction_id": "TX000025",
+        "importance": 0.6
+      },
+      {
+        "transaction_id": "TX000029",
+        "importance": 0.3
+      },
+      {
+        "transaction_id": "TX000031",
+        "importance": 0.5
+      }
+    ],
+    "error_code": null
+  }
+]

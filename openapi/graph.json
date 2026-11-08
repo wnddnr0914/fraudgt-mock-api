@@ -1,0 +1,486 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FraudGT AML — Subgraph API",
+    "description": "프론트엔드·그래프·Agent 연동을 위한 합성 거래 기반 API. 거래 조회·그래프·설명·유형 분석은 서비스별 Base URL로 독립 실행합니다. 실제 SAML-D 행이나 ML 추론 결과가 아닙니다. fraud_score, edge importance, typology confidence는 서로 다른 Mock 출력입니다. 모든 시간 응답은 UTC로 정규화합니다.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/alerts/{transaction_id}/graph": {
+      "get": {
+        "tags": [
+          "Graph"
+        ],
+        "summary": "시점 기준 주변 Subgraph",
+        "description": "송금·수취 계좌를 hop 0으로 두고 입출금 양방향 이웃을 탐색합니다. 출력 Edge 방향과 반복 송금은 보존합니다. 시간 범위는 [target-lookback, target]입니다. 타깃 Edge를 반드시 포함하며 importance는 반환하지 않습니다. 설명용 고정 추론 그래프와 별개의 화면 표시용 그래프입니다.",
+        "operationId": "get_graph_api_alerts__transaction_id__graph_get",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160,
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "description": "조회할 개별 거래 ID. 계좌 ID와 구분합니다.",
+              "examples": [
+                "TX000003"
+              ],
+              "title": "Transaction Id"
+            },
+            "description": "조회할 개별 거래 ID. 계좌 ID와 구분합니다."
+          },
+          {
+            "name": "hops",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 3,
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "탐색 깊이. 서버 기본값 2",
+              "title": "Hops"
+            },
+            "description": "탐색 깊이. 서버 기본값 2"
+          },
+          {
+            "name": "lookback_days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 30,
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "과거 조회 일수. 서버 기본값 7",
+              "title": "Lookback Days"
+            },
+            "description": "과거 조회 일수. 서버 기본값 7"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphResponse"
+                },
+                "examples": {
+                  "fixture": {
+                    "summary": "합성 Fixture 응답",
+                    "value": {
+                      "transaction_id": "TX000003",
+                      "graph": {
+                        "hops": 2,
+                        "lookback_days": 7,
+                        "neighborhood_direction": "both",
+                        "window_start": "2022-10-25T10:07:00Z",
+                        "window_end": "2022-11-01T10:07:00Z",
+                        "nodes": [
+                          {
+                            "id": "A"
+                          },
+                          {
+                            "id": "B"
+                          },
+                          {
+                            "id": "BORDER"
+                          },
+                          {
+                            "id": "C"
+                          },
+                          {
+                            "id": "D"
+                          },
+                          {
+                            "id": "G"
+                          },
+                          {
+                            "id": "I"
+                          },
+                          {
+                            "id": "J"
+                          },
+                          {
+                            "id": "N"
+                          },
+                          {
+                            "id": "R"
+                          }
+                        ],
+                        "edges": [
+                          {
+                            "id": "TX000030",
+                            "source": "BORDER",
+                            "target": "B",
+                            "amount": 20.0,
+                            "currency": "USD",
+                            "timestamp": "2022-10-25T10:07:00Z",
+                            "is_target": false
+                          },
+                          {
+                            "id": "TX000015",
+                            "source": "R",
+                            "target": "N",
+                            "amount": 550.0,
+                            "currency": "USD",
+                            "timestamp": "2022-10-27T08:00:00Z",
+                            "is_target": false
+                          },
+                          {
+                            "id": "TX000014",
+                            "source": "N",
+                            "target": "B",
+                            "amount": 600.0,
+                            "currency": "USD",
+                            "timestamp": "2022-10-28T08:00:00Z",
+                            "is_target": false
+                          },
+                          {
+                            "id": "TX000008",
+                            "source": "G",
+                            "target": "A",
+                            "amount": 900.0,
+                            "currency": "USD",
+                            "timestamp": "2022-10-31T09:00:00Z",
+                            "is_target": false
+                          },
+                          {
+                            "id": "TX000001",
+                            "source": "A",
+                            "target": "B",
+                            "amount": 1000.0,
+                            "currency": "USD",
+                            "timestamp": "2022-11-01T10:01:00Z",
+                            "is_target": false
+                          },
+                          {
+                            "id": "TX000029",
+                            "source": "A",
+                            "target": "B",
+                            "amount": 1000.0,
+                            "currency": "USD",
+                            "timestamp": "2022-11-01T10:01:00Z",
+                            "is_target": false
+                          },
+                          {
+                            "id": "TX000007",
+                            "source": "A",
+                            "target": "B",
+                            "amount": 1000.0,
+                            "currency": "USD",
+                            "timestamp": "2022-11-01T10:02:00Z",
+                            "is_target": false
+                          },
+                          {
+                            "id": "TX000002",
+                            "source": "C",
+                            "target": "B",
+                            "amount": 2000.0,
+                            "currency": "USD",
+                            "timestamp": "2022-11-01T10:03:00Z",
+                            "is_target": false
+                          },
+                          {
+                            "id": "TX000012",
+                            "source": "B",
+                            "target": "I",
+                            "amount": 400.0,
+                            "currency": "USD",
+                            "timestamp": "2022-11-01T10:06:00Z",
+                            "is_target": false
+                          },
+                          {
+                            "id": "TX000013",
+                            "source": "B",
+                            "target": "J",
+                            "amount": 350.0,
+                            "currency": "USD",
+                            "timestamp": "2022-11-01T10:06:30Z",
+                            "is_target": false
+                          },
+                          {
+                            "id": "TX000003",
+                            "source": "B",
+                            "target": "D",
+                            "amount": 2800.0,
+                            "currency": "USD",
+                            "timestamp": "2022-11-01T10:07:00Z",
+                            "is_target": true
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction is absent or below the configured alert threshold",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "ALERT_NOT_FOUND",
+                    "message": "Transaction is absent or below the configured alert threshold",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request parameters are invalid",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "Request parameters are invalid",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An internal error occurred",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INTERNAL_ERROR",
+                    "message": "An internal error occurred",
+                    "details": []
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DisplayGraph": {
+        "properties": {
+          "hops": {
+            "type": "integer",
+            "maximum": 3.0,
+            "minimum": 1.0,
+            "title": "Hops",
+            "description": "타깃 양 끝 계좌를 0-Hop으로 하는 양방향 인접 탐색 깊이."
+          },
+          "lookback_days": {
+            "type": "integer",
+            "maximum": 30.0,
+            "minimum": 1.0,
+            "title": "Lookback Days"
+          },
+          "neighborhood_direction": {
+            "type": "string",
+            "const": "both",
+            "title": "Neighborhood Direction",
+            "description": "이웃 탐색만 양방향입니다. 응답 Edge 방향은 원본 송금 방향입니다.",
+            "default": "both"
+          },
+          "window_start": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Window Start",
+            "description": "포함되는 과거 시각 하한."
+          },
+          "window_end": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Window End",
+            "description": "포함되는 거래 시각 상한. 타깃 거래 시각으로 고정됩니다."
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/GraphNode"
+            },
+            "type": "array",
+            "title": "Nodes"
+          },
+          "edges": {
+            "items": {
+              "$ref": "#/components/schemas/GraphEdge"
+            },
+            "type": "array",
+            "title": "Edges"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "hops",
+          "lookback_days",
+          "window_start",
+          "window_end",
+          "nodes",
+          "edges"
+        ],
+        "title": "DisplayGraph"
+      },
+      "ErrorInfo": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code",
+            "description": "Stable machine-readable error code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable reason"
+          },
+          "details": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Details",
+            "description": "Parameter validation details"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorInfo"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse"
+      },
+      "GraphEdge": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "공통 transaction_id. 같은 계좌 쌍의 반복 송금도 개별 Edge로 유지합니다."
+          },
+          "source": {
+            "type": "string",
+            "title": "Source",
+            "description": "원본 송금 계좌 ID."
+          },
+          "target": {
+            "type": "string",
+            "title": "Target",
+            "description": "원본 수취 계좌 ID."
+          },
+          "amount": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Amount"
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "is_target": {
+            "type": "boolean",
+            "title": "Is Target"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "source",
+          "target",
+          "amount",
+          "currency",
+          "timestamp",
+          "is_target"
+        ],
+        "title": "GraphEdge"
+      },
+      "GraphNode": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "원본 계좌 ID. 모델의 정수 Node Index가 아닙니다."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "title": "GraphNode"
+      },
+      "GraphResponse": {
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "title": "Transaction Id"
+          },
+          "graph": {
+            "$ref": "#/components/schemas/DisplayGraph",
+            "description": "화면 조회 그래프. 중요도가 없으며 설명용 고정 추론 그래프와 구분됩니다."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "graph"
+        ],
+        "title": "GraphResponse"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8002",
+      "description": "Local Mock service default"
+    }
+  ],
+  "x-service": "graph"
+}
