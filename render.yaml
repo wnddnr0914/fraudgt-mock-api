@@ -1,0 +1,67 @@
+# Upload this project's CONTENTS to the Git repository root.
+# Deploy with Render > New > Blueprint. Each entry is a separate public service.
+# If the app is a repo subfolder, add rootDir: fraudgt-mock-api to EACH service.
+services:
+  - type: web
+    name: fraudgt-mock-alerts
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.lock.txt
+    startCommand: python -m uvicorn app.entrypoints.alerts:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /openapi.json
+    envVars:
+      - fromGroup: fraudgt-mock-shared
+
+  - type: web
+    name: fraudgt-mock-graph
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.lock.txt
+    startCommand: python -m uvicorn app.entrypoints.graph:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /openapi.json
+    envVars:
+      - fromGroup: fraudgt-mock-shared
+
+  - type: web
+    name: fraudgt-mock-explanation
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.lock.txt
+    startCommand: python -m uvicorn app.entrypoints.explanation:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /openapi.json
+    envVars:
+      - fromGroup: fraudgt-mock-shared
+
+  - type: web
+    name: fraudgt-mock-analysis
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.lock.txt
+    startCommand: python -m uvicorn app.entrypoints.analysis:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /openapi.json
+    envVars:
+      - fromGroup: fraudgt-mock-shared
+
+envVarGroups:
+  - name: fraudgt-mock-shared
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.7"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: ALERT_THRESHOLD
+        value: "0.8"
+      - key: FRAUDGT_MODEL_VERSION
+        value: fraudgt-mock-v1
+      - key: TYPOLOGY_MODEL_VERSION
+        value: typology-mock-v1
+      - key: GRAPH_DEFAULT_HOPS
+        value: "2"
+      - key: GRAPH_DEFAULT_LOOKBACK_DAYS
+        value: "7"
+      - key: SOURCE_TIMEZONE
+        value: UTC
+      # Add the deployed FRONTEND origin here, or edit the group in Dashboard.
+      # Changes made only in Dashboard can be overwritten on Blueprint sync.
+      - key: CORS_ORIGINS
+        value: http://localhost:3000,http://localhost:5173
