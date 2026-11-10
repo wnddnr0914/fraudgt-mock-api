@@ -4,7 +4,7 @@
 
 기존 `aml-mock-api`와 `gnn-mock-api`는 다른 계약의 프로젝트입니다. 이번 요구사항은 이 `fraudgt-mock-api` 폴더에 독립적으로 구현했습니다.
 
-다른 팀원이 인터넷에서 사용하도록 배포하려면 [Render 배포 안내](docs/RENDER_DEPLOYMENT.md)를 따릅니다. `render.yaml`에 4개 공개 Web Service의 설정을 준비했습니다. 실제 Render 계정에 서비스를 생성하거나 배포한 상태는 아닙니다.
+다른 팀원이 인터넷에서 사용하도록 배포하려면 [Render 배포 안내](docs/RENDER_DEPLOYMENT.md)를 따릅니다. `render.yaml`에 4개 공개 Web Service의 설정을 준비했습니다.
 
 ## 설치와 실행
 
